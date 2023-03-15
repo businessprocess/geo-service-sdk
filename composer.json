@@ -1,0 +1,34 @@
+{
+  "name": "businessprocess/geo-service-sdk",
+  "description": "Geo service sdk for php",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "maveriks",
+      "email": "maveriks.echo@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": "^7.4|^8.0",
+    "guzzlehttp/guzzle": "^7.0"
+  },
+  "autoload": {
+    "files": [
+      "app/helpers.php"
+    ],
+    "psr-4": {
+      "GeoService\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "GeoService\\GeoServiceProvider"
+      ]
+    }
+  }
+}
