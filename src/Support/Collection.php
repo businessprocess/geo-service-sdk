@@ -23,6 +23,19 @@ class Collection
         return $this->items;
     }
 
+    public function count()
+    {
+        return count($this->items);
+    }
+
+    public function first()
+    {
+        foreach ($this->items as $item) {
+            return $item;
+        }
+        return null;
+    }
+
     public function push(...$values)
     {
         foreach ($values as $value) {

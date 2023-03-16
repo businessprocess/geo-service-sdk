@@ -93,11 +93,15 @@ class GeoService
      * @param string|null $places
      * @return Collection
      */
-    public function search(string $keyword, bool $strict = false, ?string $places = null)
+    public function search(string $keyword, ?bool $strict = null, ?string $places = null)
     {
+        if (!is_null($strict)) {
+            $strict = $strict ? 'city-strict' : 'city-like';
+        }
+
         return $this->client->get('node-search', [
             'query' => $keyword,
-            'query-type' => $strict ? 'city-strict' : 'city-like',
+            'query-type' => $strict,
             'details' => true,
             'tags' => true,
             'places' => $places,
@@ -120,5 +124,10 @@ class GeoService
     public function alive(): bool
     {
         return $this->client->get('utils/alive')->successful();
+    }
+
+    public function isServiceId(string $id): bool
+    {
+        return str_starts_with($id, 'r');
     }
 }
