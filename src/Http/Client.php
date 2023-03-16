@@ -20,7 +20,6 @@ class Client implements HttpClient
 
         $this->http = $factory->asJson()
             ->baseUrl($this->config['url'])
-            ->async($this->config['async'] ?? false)
             ->timeout(30);
     }
 

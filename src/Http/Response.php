@@ -58,7 +58,7 @@ class Response implements ArrayAccess
      * Get the JSON decoded body of the response as a collection.
      *
      * @param string|null $key
-     * @return \Illuminate\Support\Collection
+     * @return \GeoService\Support\Collection
      */
     public function collect($key = null)
     {
@@ -177,7 +177,7 @@ class Response implements ArrayAccess
             return $this->decoded;
         }
 
-        return $this->decoded[$key] ?? $default;
+        return data_get($this->decoded, $key, $default);
     }
 
     /**

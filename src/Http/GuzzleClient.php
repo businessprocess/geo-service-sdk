@@ -18,7 +18,6 @@ class GuzzleClient implements HttpClient
         $this->http = new \GuzzleHttp\Client([
             'base_uri' => $config['url'] ?? self::URL,
             RequestOptions::HEADERS => [
-                'Authentication' => $config['authentication'] ?? null,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
                 RequestOptions::CONNECT_TIMEOUT => $config['connect_timeout'] ?? 80,
@@ -40,7 +39,6 @@ class GuzzleClient implements HttpClient
      * @param string $uri
      * @param array $options
      * @return Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function get(string $uri, array $options = []): Response
     {
@@ -51,7 +49,6 @@ class GuzzleClient implements HttpClient
      * @param string $uri
      * @param array $options
      * @return Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function post(string $uri, array $options = [])
     {

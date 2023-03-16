@@ -4,14 +4,18 @@ namespace GeoService\Service;
 
 use GeoService\Contracts\HttpClient;
 use GeoService\Exceptions\RequestException;
+use GeoService\Http\GuzzleClient;
 use GeoService\Models\Country;
 use GeoService\Models\Model;
 use GeoService\Support\Collection;
 
 class GeoService
 {
-    public function __construct(protected HttpClient $client)
+    private HttpClient $client;
+
+    public function __construct(?HttpClient $client = null)
     {
+        $this->client = $client ?? new GuzzleClient();
     }
 
     /**
@@ -97,7 +101,9 @@ class GeoService
             'details' => true,
             'tags' => true,
             'places' => $places,
-        ])->collect('items')->map(fn($items) => Model::parse($items));
+        ])
+            ->collect('items')
+            ->map(fn($items) => Model::parse($items));
     }
 
     /**

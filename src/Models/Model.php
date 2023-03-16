@@ -70,37 +70,9 @@ abstract class Model
 
     public static function parse(mixed $response): static
     {
-        switch ($response['place']) {
-            case 'country':
-                $class = Country::class;
-                break;
-            case 'city':
-                $class = City::class;
-                break;
-            case 'town':
-                $class = Town::class;
-                break;
-            case 'state':
-                $class = State::class;
-                break;
-            case 'district':
-                $class = District::class;
-                break;
-            case 'municipality':
-                $class = Municipality::class;
-                break;
-            case 'borough':
-                $class = Borough::class;
-                break;
-            case 'village':
-                $class = Village::class;
-                break;
-            default:
-                $class = Undefined::class;
-                break;
-        }
+        $class = 'GeoService\\Models\\' . ucfirst($response['place']);
 
-        return new $class($response);
+        return class_exists($class) ? new $class($response) : new Undefined($response);
     }
 
     public function setName(string $name): void

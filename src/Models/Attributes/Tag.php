@@ -2,12 +2,8 @@
 
 namespace GeoService\Models\Attributes;
 
-use GeoService\Models\Traits\Support;
-
 class Tag
 {
-    use Support;
-
     protected string $alpha2;
     protected string $alpha3;
     protected string $numeric;
@@ -36,10 +32,10 @@ class Tag
                 if (str_contains($key, ':')) {
                     [$method, $key] = explode(':', $key);
 
-                    if (method_exists($this, $method = $this->stringToCamel($method))) {
+                    if (method_exists($this, $method = str_camel_case($method))) {
                         $this->{$method}($key, $value);
                     }
-                } elseif (property_exists($this, $key = $this->stringToCamel($key))) {
+                } elseif (property_exists($this, $key = str_camel_case($key))) {
                     $this->{$key} = $value;
                 } else {
                     $this->setAttribute($key, $value);
@@ -78,7 +74,7 @@ class Tag
      */
     public function getOfficialName(?string $key = null, ?string $default = null): mixed
     {
-        return $this->arrayGet($this->officialName, $key, $default);
+        return data_get($this->officialName, $key, $default);
     }
 
     /**
@@ -88,7 +84,7 @@ class Tag
      */
     public function getRef(?string $key = null, ?string $default = null): array
     {
-        return $this->arrayGet($this->ref, $key, $default);
+        return data_get($this->ref, $key, $default);
     }
 
     /**
@@ -198,7 +194,7 @@ class Tag
      */
     public function getAttribute($key = null, $default = null): array
     {
-        return $this->arrayGet($this->attributes, $key, $default);
+        return data_get($this->attributes, $key, $default);
     }
 
     /**
@@ -207,7 +203,7 @@ class Tag
      */
     public function setAttribute($key, $value = null): void
     {
-        $this->arraySet($this->attributes, $key, $value);
+        data_set($this->attributes, $key, $value);
     }
 
     protected function ISO31661($key, $value): void
@@ -217,11 +213,11 @@ class Tag
 
     protected function officialName($key, $value): void
     {
-        $this->arraySet($this->officialName, $key, $value);
+        data_set($this->officialName, $key, $value);
     }
 
     protected function ref($key, $value): void
     {
-        $this->arraySet($this->ref, $key, $value);
+        data_set($this->ref, $key, $value);
     }
 }
