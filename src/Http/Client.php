@@ -4,6 +4,7 @@ namespace GeoService\Http;
 
 use GeoService\Contracts\HttpClient;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\RequestOptions;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
@@ -72,6 +73,6 @@ class Client implements HttpClient
      */
     public function post(string $uri, array $options = []): PromiseInterface|Response
     {
-        return $this->getHttp()->post($uri, $options);
+        return $this->getHttp()->post($uri, [RequestOptions::JSON => $options]);
     }
 }
