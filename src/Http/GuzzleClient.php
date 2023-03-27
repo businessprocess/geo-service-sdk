@@ -42,7 +42,7 @@ class GuzzleClient implements HttpClient
      */
     public function get(string $uri, array $options = []): Response
     {
-        return new Response($this->getHttp()->get($uri, $options));
+        return new Response($this->getHttp()->get($uri, [RequestOptions::QUERY => $options]));
     }
 
     /**
@@ -52,6 +52,6 @@ class GuzzleClient implements HttpClient
      */
     public function post(string $uri, array $options = [])
     {
-        return new Response($this->getHttp()->post($uri, $options));
+        return new Response($this->getHttp()->post($uri, [RequestOptions::JSON => $options]));
     }
 }

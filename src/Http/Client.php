@@ -63,7 +63,7 @@ class Client implements HttpClient
      */
     public function get(string $uri, array $options = []): PromiseInterface|Response
     {
-        return $this->getHttp()->get($uri, $options);
+        return $this->getHttp()->get($uri, [RequestOptions::QUERY => $options]);
     }
 
     /**

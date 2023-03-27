@@ -11,7 +11,7 @@ Geo Service SDK is a PSR-compatible PHP package for working with geo service api
 
 
 ## Installation
-The recommended way to install Translate API client is through
+The recommended way to install Geo service is through
 [Composer](http://getcomposer.org).
 
 ```bash

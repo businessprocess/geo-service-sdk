@@ -18,9 +18,14 @@ class Collection
         return new static($items);
     }
 
-    public function all()
+    public function toArray()
     {
         return $this->items;
+    }
+
+    public function all()
+    {
+        return $this->toArray();
     }
 
     public function count()
