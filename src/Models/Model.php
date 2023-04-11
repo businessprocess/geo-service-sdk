@@ -29,6 +29,9 @@ abstract class Model
     public function __construct($data = [])
     {
         $this->details = collect();
+        $this->children = collect();
+        $this->tags = new Tag();
+
         foreach ($data as $key => $value) {
             $method = 'set' . ucfirst($key);
             if (method_exists($this, $method)) {
@@ -41,10 +44,7 @@ abstract class Model
     {
         return [
             'geo_id' => $this->getId(),
-            'title' => $this->getTags()->getOfficialName(
-                $this->getLocale(),
-                $this->getName()
-            ),
+            'title' => $this->getTags()->getNameByLocale() ?? $this->getName(),
             'place' => $this->getPlace(),
             'children' => $this->getChildren()->map(fn(Model $model) => $model->toArray())->all()
         ];
@@ -63,7 +63,7 @@ abstract class Model
     /**
      * @return string
      */
-    public function getLocale(): string
+    public static function getLocale(): string
     {
         return static::$locale;
     }
@@ -156,7 +156,7 @@ abstract class Model
      */
     public function setTags($tags): void
     {
-        $this->tags = new Tag($tags);
+        $this->tags->fill($tags);
     }
 
     /**

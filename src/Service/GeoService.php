@@ -66,7 +66,7 @@ class GeoService
     public function getById(string $id): Model
     {
         $response = $this->client->get("nodes/$id", [
-            'detail' => true,
+            'details' => true,
             'tags' => true,
         ])
             ->throw()

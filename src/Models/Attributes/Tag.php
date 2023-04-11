@@ -2,12 +2,15 @@
 
 namespace GeoService\Models\Attributes;
 
+use GeoService\Models\Model;
+
 class Tag
 {
     protected string $alpha2;
     protected string $alpha3;
     protected string $numeric;
     protected array $officialName = [];
+    protected array $altName = [];
     protected string $isInContinent;
     protected string $type;
     protected string $adminLevel;
@@ -27,6 +30,11 @@ class Tag
 
     public function __construct($tags = [])
     {
+        $this->fill($tags);
+    }
+
+    public function fill($tags): static
+    {
         foreach ($tags as $key => $value) {
             try {
                 if (str_contains($key, ':')) {
@@ -43,6 +51,11 @@ class Tag
             } catch (\Throwable $e) {
             }
         }
+    }
+
+    public function getNameByLocale($locale = null, $default = 'en'): ?string
+    {
+        return $this->getAltName($locale ?? Model::getLocale(), $this->getAltName($default));
     }
 
     /**
@@ -219,5 +232,15 @@ class Tag
     protected function ref($key, $value): void
     {
         data_set($this->ref, $key, $value);
+    }
+
+    public function getAltName(?string $key = null, ?string $default = null): mixed
+    {
+        return data_get($this->altName, $key, $default);
+    }
+
+    protected function altName($key, $value): void
+    {
+        data_set($this->altName, $key, $value);
     }
 }
