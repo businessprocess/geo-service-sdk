@@ -33,7 +33,7 @@ class Tag
         $this->fill($tags);
     }
 
-    public function fill($tags): static
+    public function fill($tags)
     {
         foreach ($tags as $key => $value) {
             try {
