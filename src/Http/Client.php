@@ -19,6 +19,8 @@ class Client implements HttpClient
         $this->processOptions($config);
 
         $this->http = $factory->asJson()
+            ->acceptJson()
+            ->withHeaders(['Accept-Language' => $this->config['locale'] ?? app()->getLocale()])
             ->baseUrl($this->config['url'])
             ->timeout(30);
     }

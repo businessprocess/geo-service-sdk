@@ -20,6 +20,7 @@ class GuzzleClient implements HttpClient
             RequestOptions::HEADERS => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
+                'Accept-Language' => $config['locale'] ?? 'ru-RU',
                 RequestOptions::CONNECT_TIMEOUT => $config['connect_timeout'] ?? 80,
                 RequestOptions::TIMEOUT => $config['timeout'] ?? 30,
                 'http_errors' => false,
