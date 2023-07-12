@@ -35,7 +35,10 @@ abstract class Model
         foreach ($data as $key => $value) {
             $method = 'set' . ucfirst($key);
             if (method_exists($this, $method)) {
-                $this->{$method}($value);
+                try {
+                    $this->{$method}($value);
+                } catch (\Throwable $e) {
+                }
             }
         }
     }
@@ -44,9 +47,10 @@ abstract class Model
     {
         return [
             'geo_id' => $this->getId(),
-            'title' => $this->getTags()->getNameByLocale() ?? $this->getName(),
+            'title' => $this->getName(),
             'place' => $this->getPlace(),
-            'children' => $this->getChildren()->map(fn(Model $model) => $model->toArray())->all()
+            'children' => $this->getChildren()->map(fn(Model $model) => $model->toArray())->all(),
+            'code' => $this->getCode(),
         ];
     }
 
@@ -83,6 +87,11 @@ abstract class Model
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->getTags()?->getAlpha2();
     }
 
     /**

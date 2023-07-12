@@ -55,6 +55,14 @@ class Collection
         return $this->map(fn($value, $key) => new $class($value, $key));
     }
 
+    public function filter(callable $callback = null)
+    {
+        if ($callback) {
+            return new static(array_filter($this->items, $callback));
+        }
+        return new static(array_filter($this->items));
+    }
+
     public function map(callable $callback)
     {
         $keys = array_keys($this->items);

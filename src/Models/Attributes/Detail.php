@@ -12,7 +12,10 @@ class Detail
     public function __construct($data = [])
     {
         foreach ($data as $key => $value) {
-            $this->{$key} = $value;
+            try {
+                $this->{$key} = $value;
+            } catch (\Throwable $e) {
+            }
         }
     }
 }
