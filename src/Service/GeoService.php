@@ -128,6 +128,6 @@ class GeoService
 
     public function isServiceId(string $id): bool
     {
-        return str_starts_with($id, 'r');
+        return (bool)preg_match("/^[r|w|n]\d*$/", $id);
     }
 }

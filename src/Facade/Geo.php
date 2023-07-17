@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static Country country(string $id)
  * @method static Country|City getById(string $id)
  * @method static Collection getChildById(string $id)
- * @method static Collection search(string $keyword, bool $strict, ?string $places = null)
+ * @method static Collection search(string $keyword, ?bool $strict = null, ?string $places = null)
  * @method static bool ping()
  * @method static bool alive()
+ * @method static bool isServiceId(string $id)
  */
 class Geo extends Facade
 {
