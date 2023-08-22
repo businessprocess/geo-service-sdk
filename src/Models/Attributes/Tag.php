@@ -6,25 +6,25 @@ use GeoService\Models\Model;
 
 class Tag
 {
-    protected string $alpha2;
-    protected string $alpha3;
-    protected string $numeric;
+    protected ?string $alpha2 = null;
+    protected ?string $alpha3 = null;
+    protected ?string $numeric = null;
     protected array $officialName = [];
     protected array $altName = [];
-    protected string $isInContinent;
-    protected string $type;
-    protected string $adminLevel;
-    protected string $boundary;
-    protected string $borderType;
-    protected string $defaultLanguage;
-    protected string $wikidata;
-    protected string $wikipedia;
-    protected string $flag;
-    protected string $koatuu;
-    protected string $katotth;
-    protected string $population;
-    protected string $postalCode;
-    protected string $timezone;
+    protected ?string $isInContinent = null;
+    protected ?string $type = null;
+    protected ?string $adminLevel = null;
+    protected ?string $boundary = null;
+    protected ?string $borderType = null;
+    protected ?string $defaultLanguage = null;
+    protected ?string $wikidata = null;
+    protected ?string $wikipedia = null;
+    protected ?string $flag = null;
+    protected ?string $koatuu = null;
+    protected ?string $katotth = null;
+    protected ?string $population = null;
+    protected ?string $postalCode = null;
+    protected ?string $timezone = null;
     protected array $ref = [];
     protected array $attributes = [];
 
@@ -53,167 +53,138 @@ class Tag
         }
     }
 
+    public function toArray(): array
+    {
+        return [
+            'alpha2' => $this->getAlpha2(),
+            'alpha3' => $this->getAlpha3(),
+            'numeric' => $this->getNumeric(),
+            'officialName' => $this->getOfficialName(),
+            'altName' => $this->getAltName(),
+            'isInContinent' => $this->getIsInContinent(),
+            'type' => $this->getType(),
+            'adminLevel' => $this->getAdminLevel(),
+            'boundary' => $this->getBoundary(),
+            'borderType' => $this->getBorderType(),
+            'defaultLanguage' => $this->getDefaultLanguage(),
+            'wikidata' => $this->getWikidata(),
+            'wikipedia' => $this->getWikipedia(),
+            'flag' => $this->getFlag(),
+            'koatuu' => $this->getKoatuu(),
+            'katotth' => $this->getKatotth(),
+            'population' => $this->getPopulation(),
+            'postalCode' => $this->getPostalCode(),
+            'timezone' => $this->getTimezone(),
+            'ref' => $this->getRef(),
+            'attributes' => $this->getAttribute(),
+        ];
+    }
+
     public function getNameByLocale($locale = null, $default = 'en'): ?string
     {
         return $this->getAltName($locale ?? Model::getLocale(), $this->getAltName($default));
     }
 
-    /**
-     * @return string
-     */
-    public function getAlpha2(): string
+    public function getAlpha2(): ?string
     {
         return $this->alpha2;
     }
 
-    /**
-     * @return string
-     */
-    public function getAlpha3(): string
+    public function getAlpha3(): ?string
     {
         return $this->alpha3;
     }
 
-    /**
-     * @return string
-     */
-    public function getNumeric(): string
+    public function getNumeric(): ?string
     {
         return $this->numeric;
     }
 
-    /**
-     * @return array|string|null
-     */
     public function getOfficialName(?string $key = null, ?string $default = null): mixed
     {
         return data_get($this->officialName, $key, $default);
     }
 
-    /**
-     * @param string|null $key
-     * @param string|null $default
-     * @return array
-     */
     public function getRef(?string $key = null, ?string $default = null): array
     {
         return data_get($this->ref, $key, $default);
     }
 
-    /**
-     * @return string
-     */
-    public function getIsInContinent(): string
+    public function getIsInContinent(): ?string
     {
         return $this->isInContinent;
     }
 
-    /**
-     * @return string
-     */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
-    public function getBoundary(): string
+    public function getBoundary(): ?string
     {
         return $this->boundary;
     }
 
-    public function getBorderType(): string
+    public function getBorderType(): ?string
     {
         return $this->borderType;
     }
 
-    /**
-     * @return string
-     */
-    public function getAdminLevel(): string
+    public function getAdminLevel(): ?string
     {
         return $this->adminLevel;
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultLanguage(): string
+    public function getDefaultLanguage(): ?string
     {
         return $this->defaultLanguage;
     }
 
-    public function getWikidata(): string
+    public function getWikidata(): ?string
     {
         return $this->wikidata;
     }
 
-    public function getWikipedia(): string
+    public function getWikipedia(): ?string
     {
         return $this->wikipedia;
     }
 
-    public function getFlag(): string
+    public function getFlag(): ?string
     {
         return $this->flag;
     }
 
-    /**
-     * @return string
-     */
-    public function getKoatuu(): string
+    public function getKoatuu(): ?string
     {
         return $this->koatuu;
     }
 
-    /**
-     * @return string
-     */
-    public function getKatotth(): string
+    public function getKatotth(): ?string
     {
         return $this->katotth;
     }
 
-    /**
-     * @return string
-     */
-    public function getPopulation(): string
+    public function getPopulation(): ?string
     {
         return $this->population;
     }
 
-    /**
-     * @return string
-     */
-    public function getPostalCode(): string
+    public function getPostalCode(): ?string
     {
         return $this->postalCode;
     }
 
-    /**
-     * @return string
-     */
-    public function getTimezone(): string
+    public function getTimezone(): ?string
     {
         return $this->timezone;
     }
 
-    /**
-     * @param null $key
-     * @param null $default
-     * @return array
-     */
     public function getAttribute($key = null, $default = null): array
     {
         return data_get($this->attributes, $key, $default);
     }
 
-    /**
-     * @param $key
-     * @param null $value
-     */
     public function setAttribute($key, $value = null): void
     {
         data_set($this->attributes, $key, $value);

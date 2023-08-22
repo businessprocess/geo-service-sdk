@@ -19,6 +19,16 @@ class Detail
         }
     }
 
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'place' => $this->getPlace(),
+            'adminLevel' => $this->getAdminLevel(),
+        ];
+    }
+
     public function isState(): bool
     {
         return $this->place === 'state';
