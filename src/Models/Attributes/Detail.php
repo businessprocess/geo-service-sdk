@@ -18,4 +18,29 @@ class Detail
             }
         }
     }
+
+    public function isState(): bool
+    {
+        return $this->place === 'state';
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getPlace(): ?string
+    {
+        return $this->place;
+    }
+
+    public function getAdminLevel(): int
+    {
+        return $this->adminLevel;
+    }
 }
