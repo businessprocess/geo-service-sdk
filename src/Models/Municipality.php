@@ -2,7 +2,7 @@
 
 namespace GeoService\Models;
 
-class Municipality
+class Municipality extends Model
 {
 
 }
