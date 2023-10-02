@@ -16,6 +16,11 @@
     "php": "^7.4|^8.0",
     "guzzlehttp/guzzle": "^7.0"
   },
+  "require-dev": {
+    "laravel/pint": "^1.1",
+    "phpunit/phpunit": "^9.3.3",
+    "laravel/framework": "^9.0"
+  },
   "autoload": {
     "files": [
       "src/helpers.php"

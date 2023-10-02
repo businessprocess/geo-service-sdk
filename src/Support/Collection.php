@@ -38,6 +38,7 @@ class Collection
         foreach ($this->items as $item) {
             return $item;
         }
+
         return null;
     }
 
@@ -52,7 +53,7 @@ class Collection
 
     public function mapInto($class)
     {
-        return $this->map(fn($value, $key) => new $class($value, $key));
+        return $this->map(fn ($value, $key) => new $class($value, $key));
     }
 
     public function filter(callable $callback = null)
@@ -60,6 +61,7 @@ class Collection
         if ($callback) {
             return new static(array_filter($this->items, $callback));
         }
+
         return new static(array_filter($this->items));
     }
 

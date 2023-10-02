@@ -11,13 +11,13 @@ class GeoServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/geo-service.php', 'geo-service');
+        $this->mergeConfigFrom(__DIR__.'/../config/geo-service.php', 'geo-service');
 
         $this->publishes([
-            __DIR__ . '/../config/geo-service.php' => config_path('geo-service.php'),
+            __DIR__.'/../config/geo-service.php' => config_path('geo-service.php'),
         ]);
 
-        $this->app->bind(HttpClient::class, function ($app){
+        $this->app->bind(HttpClient::class, function ($app) {
             return $app->make(Client::class);
         });
 

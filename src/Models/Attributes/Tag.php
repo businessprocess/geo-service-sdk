@@ -7,25 +7,45 @@ use GeoService\Models\Model;
 class Tag
 {
     protected ?string $alpha2 = null;
+
     protected ?string $alpha3 = null;
+
     protected ?string $numeric = null;
+
     protected array $officialName = [];
+
     protected array $altName = [];
+
     protected ?string $isInContinent = null;
+
     protected ?string $type = null;
+
     protected ?string $adminLevel = null;
+
     protected ?string $boundary = null;
+
     protected ?string $borderType = null;
+
     protected ?string $defaultLanguage = null;
+
     protected ?string $wikidata = null;
+
     protected ?string $wikipedia = null;
+
     protected ?string $flag = null;
+
     protected ?string $koatuu = null;
+
     protected ?string $katotth = null;
+
     protected ?string $population = null;
+
     protected ?string $postalCode = null;
+
     protected ?string $timezone = null;
+
     protected array $ref = [];
+
     protected array $attributes = [];
 
     public function __construct($tags = [])
@@ -100,12 +120,12 @@ class Tag
         return $this->numeric;
     }
 
-    public function getOfficialName(?string $key = null, ?string $default = null): mixed
+    public function getOfficialName(string $key = null, string $default = null): mixed
     {
         return data_get($this->officialName, $key, $default);
     }
 
-    public function getRef(?string $key = null, ?string $default = null): array
+    public function getRef(string $key = null, string $default = null): array
     {
         return data_get($this->ref, $key, $default);
     }
@@ -205,7 +225,7 @@ class Tag
         data_set($this->ref, $key, $value);
     }
 
-    public function getAltName(?string $key = null, ?string $default = null): mixed
+    public function getAltName(string $key = null, string $default = null): mixed
     {
         return data_get($this->altName, $key, $default);
     }

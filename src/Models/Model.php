@@ -11,11 +11,17 @@ abstract class Model
     protected static string $locale = 'ru';
 
     protected string $id;
+
     protected string $name;
+
     protected bool $hasChild;
+
     protected ?string $place;
+
     protected string $osm;
+
     protected Tag $tags;
+
     /**
      * @var Collection|mixed
      */
@@ -33,7 +39,7 @@ abstract class Model
         $this->tags = new Tag();
 
         foreach ($data as $key => $value) {
-            $method = 'set' . ucfirst($key);
+            $method = 'set'.ucfirst($key);
             if (method_exists($this, $method)) {
                 try {
                     $this->{$method}($value);
@@ -49,7 +55,7 @@ abstract class Model
             'geo_id' => $this->getId(),
             'title' => $this->getName(),
             'place' => $this->getPlace(),
-            'children' => $this->getChildren()->map(fn(Model $model) => $model->toArray())->all(),
+            'children' => $this->getChildren()->map(fn (Model $model) => $model->toArray())->all(),
             'code' => $this->getCode(),
         ];
     }
@@ -64,9 +70,6 @@ abstract class Model
         static::$locale = $locale;
     }
 
-    /**
-     * @return string
-     */
     public static function getLocale(): string
     {
         return static::$locale;
@@ -74,7 +77,7 @@ abstract class Model
 
     public static function parse(mixed $response): static
     {
-        $class = 'GeoService\\Models\\' . ucfirst($response['place']);
+        $class = 'GeoService\\Models\\'.ucfirst($response['place']);
 
         return class_exists($class) ? new $class($response) : new Undefined($response);
     }
@@ -94,9 +97,6 @@ abstract class Model
         return $this->getTags()?->getAlpha2();
     }
 
-    /**
-     * @return Collection
-     */
     public function getChildren(): Collection
     {
         return $this->children;
@@ -110,7 +110,7 @@ abstract class Model
     }
 
     /**
-     * @param Collection $children
+     * @param  Collection  $children
      * @return Model
      */
     public function setChildren($children): static
@@ -120,81 +120,54 @@ abstract class Model
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @param string $id
-     */
     public function setId(string $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return bool
-     */
     public function isHasChild(): bool
     {
         return $this->hasChild;
     }
 
-    /**
-     * @param bool $hasChild
-     */
     public function setHasChild(bool $hasChild): void
     {
         $this->hasChild = $hasChild;
     }
 
-    /**
-     * @return Tag
-     */
     public function getTags(): Tag
     {
         return $this->tags;
     }
 
     /**
-     * @param mixed $tags
+     * @param  mixed  $tags
      */
     public function setTags($tags): void
     {
         $this->tags->fill($tags);
     }
 
-    /**
-     * @return string
-     */
     public function getOsm(): string
     {
         return $this->osm;
     }
 
-    /**
-     * @param string $osm
-     */
     public function setOsm(string $osm): void
     {
         $this->osm = $osm;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPlace(): ?string
     {
         return $this->place;
     }
 
-    /**
-     * @param string $place
-     */
     public function setPlace(string $place): void
     {
         $this->place = $place;
@@ -208,11 +181,8 @@ abstract class Model
         return $this->details;
     }
 
-    /**
-     * @param array|object $details
-     */
     public function setDetails(array|object $details): void
     {
-        $this->details = collect((array)$details)->mapInto(Detail::class);
+        $this->details = collect((array) $details)->mapInto(Detail::class);
     }
 }

@@ -21,35 +21,24 @@ class Client implements HttpClient
         $this->http = $factory->asJson()
             ->acceptJson()
             ->withHeaders(['Accept-Language' => $this->config['locale'] ?? app()->getLocale()])
-            ->baseUrl($this->config['url'])
+            ->baseUrl($this->config['url'] ?? HttpClient::URL)
             ->timeout(30);
     }
 
-    /**
-     * @return Factory|PendingRequest
-     */
     public function getHttp(): Factory|PendingRequest
     {
         return $this->http;
     }
 
-    /**
-     * @param $config
-     * @return void
-     */
     public function processOptions($config): void
     {
-        if (!isset($config['url'])) {
+        if (! isset($config['url'])) {
             throw new \InvalidArgumentException('Url is required');
         }
         $this->config = $config;
     }
 
     /**
-     * @param string $method
-     * @param string $uri
-     * @param array $options
-     * @return PromiseInterface|Response
      * @throws \Exception
      */
     public function request(string $method, string $uri, array $options = []): PromiseInterface|Response
@@ -57,21 +46,11 @@ class Client implements HttpClient
         return $this->getHttp()->send($method, $uri, $options);
     }
 
-    /**
-     * @param string $uri
-     * @param array $options
-     * @return PromiseInterface|Response
-     */
     public function get(string $uri, array $options = []): PromiseInterface|Response
     {
         return $this->getHttp()->get($uri, $options);
     }
 
-    /**
-     * @param string $uri
-     * @param array $options
-     * @return PromiseInterface|Response
-     */
     public function post(string $uri, array $options = []): PromiseInterface|Response
     {
         return $this->getHttp()->post($uri, $options);

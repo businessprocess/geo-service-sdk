@@ -6,16 +6,14 @@ use GeoService\Http\Response;
 
 interface HttpClient
 {
+    public const URL = 'https://geo-service.ooo.ua/api/v1/';
+
     /**
-     * @param string $uri
-     * @param array $options
      * @return Response
      */
     public function get(string $uri, array $options = []);
 
     /**
-     * @param string $uri
-     * @param array $options
      * @return Response
      */
     public function post(string $uri, array $options = []);

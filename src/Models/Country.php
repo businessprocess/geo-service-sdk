@@ -4,5 +4,4 @@ namespace GeoService\Models;
 
 class Country extends Model
 {
-
 }

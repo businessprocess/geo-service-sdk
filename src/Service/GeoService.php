@@ -5,6 +5,7 @@ namespace GeoService\Service;
 use GeoService\Contracts\HttpClient;
 use GeoService\Exceptions\RequestException;
 use GeoService\Http\GuzzleClient;
+use GeoService\Models\City;
 use GeoService\Models\Country;
 use GeoService\Models\Model;
 use GeoService\Support\Collection;
@@ -13,14 +14,12 @@ class GeoService
 {
     private HttpClient $client;
 
-    public function __construct(?HttpClient $client = null)
+    public function __construct(HttpClient $client = null)
     {
         $this->client = $client ?? new GuzzleClient();
     }
 
     /**
-     * @param string $id
-     * @return Country
      * @throws RequestException
      */
     public function getCountryWithChildren(string $id): Country
@@ -34,6 +33,7 @@ class GeoService
 
     /**
      * @return Collection
+     *
      * @throws RequestException
      */
     public function countries()
@@ -45,8 +45,6 @@ class GeoService
     }
 
     /**
-     * @param string $id
-     * @return Country
      * @throws RequestException
      */
     public function country(string $id): Country
@@ -59,15 +57,29 @@ class GeoService
     }
 
     /**
-     * @param string $id
-     * @return Model
+     * @return Collection
+     *
      * @throws RequestException
      */
-    public function getById(string $id): Model
+    public function getCitiesByCountry(string $id, bool $tags = true, bool $details = false)
+    {
+        return $this->client->get("countries/$id/cities", [
+            'details' => $details,
+            'tags' => $tags,
+        ])
+            ->throw()
+            ->collect('items')
+            ->mapInto(City::class);
+    }
+
+    /**
+     * @throws RequestException
+     */
+    public function getById(string $id, bool $tags = true, bool $details = false): Model
     {
         $response = $this->client->get("nodes/$id", [
-            'details' => true,
-            'tags' => true,
+            'details' => $details,
+            'tags' => $tags,
         ])
             ->throw()
             ->json('item');
@@ -76,8 +88,8 @@ class GeoService
     }
 
     /**
-     * @param string $id
      * @return Collection
+     *
      * @throws RequestException
      */
     public function getChildById(string $id)
@@ -88,14 +100,11 @@ class GeoService
     }
 
     /**
-     * @param string $keyword
-     * @param bool $strict
-     * @param string|null $places
      * @return Collection
      */
-    public function search(string $keyword, ?bool $strict = null, ?string $places = null)
+    public function search(string $keyword, bool $strict = null, string $places = null)
     {
-        if (!is_null($strict)) {
+        if (! is_null($strict)) {
             $strict = $strict ? 'city-strict' : 'city-like';
         }
 
@@ -107,20 +116,14 @@ class GeoService
             'places' => $places,
         ])
             ->collect('items')
-            ->map(fn($items) => Model::parse($items));
+            ->map(fn ($items) => Model::parse($items));
     }
 
-    /**
-     * @return bool
-     */
     public function ping(): bool
     {
         return $this->client->get('ping')->successful();
     }
 
-    /**
-     * @return bool
-     */
     public function alive(): bool
     {
         return $this->client->get('utils/alive')->successful();
@@ -128,6 +131,6 @@ class GeoService
 
     public function isServiceId(string $id): bool
     {
-        return (bool)preg_match("/^[r|w|n]\d*$/", $id);
+        return (bool) preg_match("/^[r|w|n]\d*$/", $id);
     }
 }

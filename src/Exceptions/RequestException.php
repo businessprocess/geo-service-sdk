@@ -17,7 +17,6 @@ class RequestException extends Exception
     /**
      * Create a new exception instance.
      *
-     * @param  \GeoService\Http\Response  $response
      * @return void
      */
     public function __construct(Response $response)
@@ -30,7 +29,6 @@ class RequestException extends Exception
     /**
      * Prepare the exception message.
      *
-     * @param  \GeoService\Http\Response $response
      * @return string
      */
     protected function prepareMessage(Response $response)
