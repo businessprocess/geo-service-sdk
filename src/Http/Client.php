@@ -25,6 +25,11 @@ class Client implements HttpClient
             ->timeout(30);
     }
 
+    public function setLocale(string $locale): void
+    {
+        $this->getHttp()->withOptions(['headers' => ['Accept-Language' => $locale]]);
+    }
+
     public function getHttp(): Factory|PendingRequest
     {
         return $this->http;

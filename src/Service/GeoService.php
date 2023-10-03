@@ -5,7 +5,6 @@ namespace GeoService\Service;
 use GeoService\Contracts\HttpClient;
 use GeoService\Exceptions\RequestException;
 use GeoService\Http\GuzzleClient;
-use GeoService\Models\City;
 use GeoService\Models\Country;
 use GeoService\Models\Model;
 use GeoService\Support\Collection;
@@ -17,6 +16,15 @@ class GeoService
     public function __construct(HttpClient $client = null)
     {
         $this->client = $client ?? new GuzzleClient();
+    }
+
+    public function setLocale(string $locale): static
+    {
+        if (method_exists($this->client, 'setLocale')) {
+            $this->client->setLocale($locale);
+        }
+
+        return $this;
     }
 
     /**
@@ -61,15 +69,17 @@ class GeoService
      *
      * @throws RequestException
      */
-    public function getCitiesByCountry(string $id, bool $tags = true, bool $details = false)
+    public function getCitiesByCountry(string $id, string $places = 'city,town', bool $tags = false, bool $details = false)
     {
         return $this->client->get("countries/$id/cities", [
             'details' => $details,
             'tags' => $tags,
+            'places' => $places,
+            'display-places' => $places,
         ])
             ->throw()
             ->collect('items')
-            ->mapInto(City::class);
+            ->map(fn ($items) => Model::parse($items));
     }
 
     /**

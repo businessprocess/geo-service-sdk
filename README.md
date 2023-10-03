@@ -47,17 +47,27 @@ composer update
 
 ```php
 $client = new \GeoService\Service\GeoService();
+
+// set locale if we need
+$client->setLocale('en')
+
 $response = $client->countries();
 
-echo $response->all(); # '[{"id": ...}'
+print $response->all(); # '[{"id": ...}'
 ```
 
 ## Usage Laravel
 
 ```php
-$response = \GeoService\Facade\Geo::countries();
+$response = \GeoService\Facade\Geo::setLocale('ru')->countries();
 
-echo $response->all(); # '[{"id": ...}'
+print $response->all(); # '[{"id": ...}'
+
+$citiesAndTowns = \GeoService\Facade\Geo::getCitiesByCountry('r60199');
+
+//get only cities, default city,town
+$cities = \GeoService\Facade\Geo::getCitiesByCountry('r60199', 'city');
+
 ```
 
 #### Available Methods
