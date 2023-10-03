@@ -185,4 +185,9 @@ abstract class Model
     {
         $this->details = collect((array) $details)->mapInto(Detail::class);
     }
+
+    public function isCityOrTown(): bool
+    {
+        return $this instanceof City || $this instanceof Town;
+    }
 }

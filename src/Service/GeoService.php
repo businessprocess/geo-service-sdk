@@ -85,11 +85,22 @@ class GeoService
     /**
      * @throws RequestException
      */
-    public function getById(string $id, bool $tags = true, bool $details = false): Model
+    public function getCityById(string $id): ?Model
+    {
+        $model = $this->getById($id, 'city,town');
+
+        return $model->isCityOrTown() ? $model : null;
+    }
+
+    /**
+     * @throws RequestException
+     */
+    public function getById(string $id, string $displayInName = null, bool $tags = true, bool $details = false): Model
     {
         $response = $this->client->get("nodes/$id", [
             'details' => $details,
             'tags' => $tags,
+            'display-places' => $displayInName,
         ])
             ->throw()
             ->json('item');
