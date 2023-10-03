@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static Country getCountryWithChildren(string $id)
  * @method static Collection countries()
  * @method static Country country(string $id)
- * @method static Collection getCitiesByCountry(string $id, string $places = 'city,town', bool $tags = false, bool $details = false)
+ * @method static Collection getCitiesByCountry(string $id, string $places = 'city,town', string $displayInName = 'city,town', bool $tags = false, bool $details = false)
  * @method static Country|City getById(string $id, bool $tags = true, bool $details = false)
  * @method static Collection getChildById(string $id)
  * @method static Collection search(string $keyword, ?bool $strict = null, ?string $places = null)

@@ -69,13 +69,13 @@ class GeoService
      *
      * @throws RequestException
      */
-    public function getCitiesByCountry(string $id, string $places = 'city,town', bool $tags = false, bool $details = false)
+    public function getCitiesByCountry(string $id, string $places = 'city,town', string $displayInName = 'city,town', bool $tags = false, bool $details = false)
     {
         return $this->client->get("countries/$id/cities", [
             'details' => $details,
             'tags' => $tags,
             'places' => $places,
-            'display-places' => $places,
+            'display-places' => $displayInName,
         ])
             ->throw()
             ->collect('items')
