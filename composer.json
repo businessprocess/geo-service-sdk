@@ -14,7 +14,8 @@
   "prefer-stable": true,
   "require": {
     "php": "^7.4|^8.0",
-    "guzzlehttp/guzzle": "^7.0"
+    "guzzlehttp/guzzle": "^7.0",
+    "ext-json": "*"
   },
   "require-dev": {
     "laravel/pint": "^1.1",

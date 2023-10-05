@@ -13,7 +13,7 @@ use GeoService\Support\Collection;
  * @property-read ?string $place
  * @property-read string $label
  */
-abstract class Model implements \ArrayAccess
+abstract class Model implements \ArrayAccess, \JsonSerializable
 {
     protected static string $locale = 'ru';
 
@@ -23,9 +23,9 @@ abstract class Model implements \ArrayAccess
 
     protected bool $hasChild;
 
-    protected ?string $place;
+    protected ?string $place = null;
 
-    protected string $osm;
+    protected ?string $osm = null;
 
     protected Tag $tags;
 
@@ -112,6 +112,11 @@ abstract class Model implements \ArrayAccess
     public function offsetUnset(mixed $offset): void
     {
         $this->$offset = null;
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 
     public static function setLocale($locale): void
@@ -212,7 +217,7 @@ abstract class Model implements \ArrayAccess
         $this->tags->fill($tags);
     }
 
-    public function getOsm(): string
+    public function getOsm(): ?string
     {
         return $this->osm;
     }
