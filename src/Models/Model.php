@@ -6,6 +6,13 @@ use GeoService\Models\Attributes\Detail;
 use GeoService\Models\Attributes\Tag;
 use GeoService\Support\Collection;
 
+/**
+ * @property-read string $id
+ * @property-read string $name
+ * @property-read string $code
+ * @property-read ?string $place
+ * @property-read string $label
+ */
 abstract class Model implements \ArrayAccess
 {
     protected static string $locale = 'ru';
@@ -132,6 +139,11 @@ abstract class Model implements \ArrayAccess
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getLabel(): string
+    {
+        return $this->getName();
     }
 
     public function getCode(): ?string
