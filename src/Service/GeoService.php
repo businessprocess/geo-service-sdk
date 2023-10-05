@@ -123,8 +123,15 @@ class GeoService
     /**
      * @return Collection
      */
-    public function search(string $keyword, bool $strict = null, string $places = null)
-    {
+    public function search(
+        string $keyword,
+        bool $strict = null,
+        string $places = null,
+        string $displayInName = null,
+        string $parentId = null,
+        bool $details = false,
+        bool $tags = false
+    ) {
         if (! is_null($strict)) {
             $strict = $strict ? 'city-strict' : 'city-like';
         }
@@ -132,9 +139,11 @@ class GeoService
         return $this->client->get('node-search', [
             'query' => $keyword,
             'query-type' => $strict,
-            'details' => true,
-            'tags' => true,
+            'details' => $details,
+            'tags' => $tags,
             'places' => $places,
+            'display-places' => $displayInName,
+            'parent-id' => $parentId,
         ])
             ->collect('items')
             ->map(fn ($items) => Model::parse($items));

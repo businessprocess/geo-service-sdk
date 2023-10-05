@@ -6,7 +6,7 @@ use GeoService\Models\Attributes\Detail;
 use GeoService\Models\Attributes\Tag;
 use GeoService\Support\Collection;
 
-abstract class Model
+abstract class Model implements \ArrayAccess
 {
     protected static string $locale = 'ru';
 
@@ -39,13 +39,7 @@ abstract class Model
         $this->tags = new Tag();
 
         foreach ($data as $key => $value) {
-            $method = 'set'.ucfirst($key);
-            if (method_exists($this, $method)) {
-                try {
-                    $this->{$method}($value);
-                } catch (\Throwable $e) {
-                }
-            }
+            $this->__set($key, $value);
         }
     }
 
@@ -54,15 +48,63 @@ abstract class Model
         return [
             'geo_id' => $this->getId(),
             'title' => $this->getName(),
-            'place' => $this->getPlace(),
-            'children' => $this->getChildren()->map(fn (Model $model) => $model->toArray())->all(),
             'code' => $this->getCode(),
+            'place' => $this->getPlace(),
+            'tags' => $this->getTags()->toArray(),
+            'children' => $this->getChildren()->map(fn (Model $model) => $model->toArray())->all(),
+            'details' => $this->getDetails()->map(fn (Detail $detail) => $detail->toArray())->all(),
         ];
     }
 
     public function __toArray(): array
     {
         return $this->toArray();
+    }
+
+    public function __get(string $name): mixed
+    {
+        $getter = 'get'.ucfirst($name);
+        if (method_exists($this, $getter)) {
+            return $this->$getter();
+        }
+
+        return null;
+    }
+
+    public function __set(string $name, mixed $value)
+    {
+        $method = 'set'.ucfirst($name);
+        if (method_exists($this, $method)) {
+            try {
+                $this->{$method}($value);
+            } catch (\Throwable $e) {
+            }
+        }
+    }
+
+    public function __isset(string $name): bool
+    {
+        return $this->$name !== null;
+    }
+
+    public function offsetExists(mixed $offset): bool
+    {
+        return $this->__isset($offset);
+    }
+
+    public function offsetGet(mixed $offset)
+    {
+        return $this->$offset;
+    }
+
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        $this->$offset = $value;
+    }
+
+    public function offsetUnset(mixed $offset): void
+    {
+        $this->$offset = null;
     }
 
     public static function setLocale($locale): void
@@ -97,7 +139,12 @@ abstract class Model
         return $this->getTags()?->getAlpha2();
     }
 
-    public function getChildren(): Collection
+    public function getUpperCode(): ?string
+    {
+        return mb_strtoupper($this->getCode(), 'UTF-8');
+    }
+
+    public function getChildren()
     {
         return $this->children;
     }
