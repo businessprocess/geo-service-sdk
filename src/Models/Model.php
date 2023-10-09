@@ -68,6 +68,16 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
         return $this->toArray();
     }
 
+    public function toString(): string
+    {
+        return $this->getName();
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
+
     public function __get(string $name): mixed
     {
         $getter = 'get'.ucfirst($name);
@@ -156,9 +166,9 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
         return $this->getTags()?->getAlpha2();
     }
 
-    public function getUpperCode(): ?string
+    public function getLowerCode(): ?string
     {
-        return mb_strtoupper($this->getCode(), 'UTF-8');
+        return mb_strtolower($this->getCode(), 'UTF-8');
     }
 
     public function getChildren()
