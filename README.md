@@ -72,15 +72,15 @@ $cities = \GeoService\Facade\Geo::getCitiesByCountry('r60199', 'city');
 
 #### Available Methods
 
-| Methods                | Description                        | Return value | 
-|------------------------|------------------------------------|--------------|
-| getCountryWithChildren | Get all countries with children    | Collection   |
-| countries              | Get all countries without details  | Collection   |
-| country                | Get country by id                  | Country      |
-| getCitiesByCountry     | Get cities by country id           | Collection   |
-| getById                | Get model by id                    | BaseModel    |
-| getChildById           | Get all children by parent id      | Collection   |
-| search                 | Get all model by keyword           | Collection   |
-| ping                   | Ping node                          | boolean      |
-| alive                  | Check is node is alive             | boolean      |
-| isServiceId            | Check is id belongs to geo service | boolean      |
+| Methods               | Description                        | Return value | 
+|-----------------------|------------------------------------|--------------|
+| getCountryWithCities  | Get all countries with children    | Collection   |
+| countries             | Get all countries without details  | Collection   |
+| country               | Get country by id                  | Country      |
+| getCitiesByCountry    | Get cities by country id           | Collection   |
+| getById               | Get model by id                    | BaseModel    |
+| getChildById          | Get all children by parent id      | Collection   |
+| search                | Get all model by keyword           | Collection   |
+| ping                  | Ping node                          | boolean      |
+| alive                 | Check is node is alive             | boolean      |
+| isServiceId           | Check is id belongs to geo service | boolean      |

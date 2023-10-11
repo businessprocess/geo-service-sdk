@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static GeoService setLocale(string $locale)
- * @method static Country getCountryWithChildren(string $id)
+ * @method static Country getCountryWithCities(string $id)
  * @method static Collection countries()
  * @method static Country country(string $id)
  * @method static Collection getCitiesByCountry(string $id, string $places = 'city,town', string $displayInName = 'city,town', bool $tags = false, bool $details = false)

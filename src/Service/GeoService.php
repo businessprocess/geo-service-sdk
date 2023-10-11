@@ -8,6 +8,7 @@ use GeoService\Http\GuzzleClient;
 use GeoService\Models\Country;
 use GeoService\Models\Model;
 use GeoService\Support\Collection;
+use Illuminate\Support\Collection as LaravelCollection;
 
 class GeoService
 {
@@ -30,17 +31,17 @@ class GeoService
     /**
      * @throws RequestException
      */
-    public function getCountryWithChildren(string $id): Country
+    public function getCountryWithCities(string $id): Country
     {
         return tap($this->country($id), function (Country $country) {
             $country->setChildren(
-                $this->getChildById($country->getId())
+                $this->getCitiesByCountry($country->getId())
             );
         });
     }
 
     /**
-     * @return Collection
+     * @return Collection|LaravelCollection
      *
      * @throws RequestException
      */
@@ -65,7 +66,7 @@ class GeoService
     }
 
     /**
-     * @return Collection
+     * @return Collection|LaravelCollection
      *
      * @throws RequestException
      */
@@ -109,7 +110,7 @@ class GeoService
     }
 
     /**
-     * @return Collection
+     * @return Collection|LaravelCollection
      *
      * @throws RequestException
      */
@@ -121,7 +122,7 @@ class GeoService
     }
 
     /**
-     * @return Collection
+     * @return Collection|LaravelCollection
      */
     public function search(
         string $keyword,
