@@ -109,6 +109,42 @@ class GeoService
         return Model::parse($response);
     }
 
+    public function getCountryByCode($code): Country
+    {
+        if (is_numeric($code)) {
+            $type = 'numeric';
+        } else {
+            $length = strlen($code);
+            $type = "alpha{$length}";
+        }
+
+        $response = $this->client->get("countries-{$type}/$code")
+            ->throw()
+            ->json();
+
+        return new Country($response);
+    }
+
+    public function getCitiesByCode($code, string $places = 'city,town', string $displayInName = 'city,town', bool $tags = false, bool $details = false)
+    {
+        if (is_numeric($code)) {
+            $type = 'numeric';
+        } else {
+            $length = strlen($code);
+            $type = "alpha{$length}";
+        }
+
+        return $this->client->get("countries-{$type}/$code/cities", [
+            'details' => $details,
+            'tags' => $tags,
+            'places' => $places,
+            'display-places' => $displayInName,
+        ])
+            ->throw()
+            ->collect('items')
+            ->map(fn ($items) => Model::parse($items));
+    }
+
     /**
      * @return Collection|LaravelCollection
      *

@@ -80,6 +80,8 @@ $cities = \GeoService\Facade\Geo::getCitiesByCountry('r60199', 'city');
 | getCitiesByCountry    | Get cities by country id           | Collection   |
 | getById               | Get model by id                    | BaseModel    |
 | getChildById          | Get all children by parent id      | Collection   |
+| getCountryByCode      | Get country by code                | Country      |
+| getCitiesByCode       | Get cities by country code         | Collection   |
 | search                | Get all model by keyword           | Collection   |
 | ping                  | Ping node                          | boolean      |
 | alive                 | Check is node is alive             | boolean      |
