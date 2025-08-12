@@ -17,7 +17,7 @@ class GuzzleClient implements HttpClient
         $this->setLocale($config['locale'] ?? 'ru-RU');
 
         $this->http = new \GuzzleHttp\Client([
-            'base_uri' => $config['url'] ?? HttpClient::URL,
+            'base_uri' => $config['url'] ?? ($_ENV['GEO_SERVICE_URL'] ?? HttpClient::URL),
             RequestOptions::HEADERS => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
